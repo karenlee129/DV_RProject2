@@ -1,0 +1,1 @@
+redwhite %>% select (QUALITY, CITRIC_ACID, COLOR) %>% filter(CITRIC_ACID <= 1.2) %>% group_by(QUALITY, CITRIC_ACID) %>% ggplot (aes (x=QUALITY, y=CITRIC_ACID)) +geom_boxplot(aes(color=factor(QUALITY)),fill=NA) + scale_x_continuous(breaks = c(3,4,5,6,7,8,9)) + geom_jitter(alpha = .1, aes(color=factor(QUALITY))) + facet_wrap(~COLOR)

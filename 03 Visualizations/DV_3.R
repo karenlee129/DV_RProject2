@@ -1,0 +1,1 @@
+redwhite %>% filter (TOTAL_SULFUR_DIOXIDE < 150, RESIDUAL_SUGAR < 20, CHLORIDES<.2) %>% ggplot(aes(x=TOTAL_SULFUR_DIOXIDE, y=RESIDUAL_SUGAR, color=CHLORIDES)) + geom_point() + scale_colour_gradientn(colours = rainbow(7)) + facet_wrap(~COLOR)

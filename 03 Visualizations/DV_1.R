@@ -1,0 +1,1 @@
+redwhite %>% select (ALCOHOL, DENSITY, QUALITY, COLOR) %>% filter(DENSITY <= 1.01 & COLOR == "white") %>% ggplot(aes(x=ALCOHOL, y=DENSITY, color=QUALITY)) + geom_point() + scale_colour_gradientn(colours = rainbow(7))

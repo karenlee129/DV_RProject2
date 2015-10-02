@@ -9,59 +9,94 @@ require("jsonlite")
 require("RCurl")
 require(extrafont)
 require(ggplot2)
+require(tidyr)
+require(dplyr)
 ```
 
 ## Procedure for getting our csv data onto Oracle.
 
 #### 1. Require packages.
 
-![](s1.jpg)
+![](s1.jpg)  
 
 #### 2. Modify R_ETL.R: set working directory and file path, read our csv, use str() to determine which variables are continuous, and change measures accordingly. 
 
-![](s2.jpg)
+![](s2.jpg)  
 
 #### 3. Run the code to get the SQL CREATE TABLE command. 
 #### 4. Use the command to create a table in SQL Developer to create a new table. 
 
 ![](s3.jpg)
-![](s4.jpg)
+![](s4.jpg)  
 
 #### 5. Open the table, click "Actions," and "Import Data..." 
 
-![](s5.jpg)
+![](s5.jpg)  
 
 #### 6. Follow through the data import wizard (Match by Position)
 
 ![](s6.jpg)
 ![](s7.jpg)
 ![](s8.jpg)
-![](s9.jpg)
+![](s9.jpg)  
 
 #### 7. All data from the csv file data should now be entered into the SQL table you created.
 
-![](s10.jpg)
+![](s10.jpg)  
+  
+### Data Frame (Red and White Wine)
 
-
-### Data Frame 1 (White Wine Only)
-```{r}
-source("../01 Data/white.R", echo = TRUE)
-```
-
-### Data Frame 2 (Red and White Wine)
-```{r}
+```{r tidy = TRUE}
 source("../01 Data/redwhite.R", echo = TRUE)
 ```
+  
+#### Variables
+Quality: Wine experts tasted and rated the quality of each wine sample on a scale from 0 (very bad) to 10 (very excellent). 
 
-df %>% filter(DENSITY <= 1.01) %>% ggplot(aes(x=ALCOHOL, y=DENSITY, color=QUALITY)) + geom_point() + scale_colour_gradientn(colours = rainbow(7))
-
-df %>% select (QUALITY, CITRIC_ACID, COLOR) %>% filter(CITRIC_ACID <= 1.2) %>% group_by(QUALITY, CITRIC_ACID) %>% ggplot (aes (x=QUALITY, y=CITRIC_ACID)) +geom_boxplot(aes(color=factor(QUALITY)),fill=NA) + scale_x_continuous(breaks = c(3,4,5,6,7,8,9)) + geom_point (aes(color = factor(QUALITY))) + geom_jitter(alpha = .15, aes(color=factor(QUALITY))) + facet_wrap(~COLOR)
-
-
-df %>% filter (TOTAL_SULFUR_DIOXIDE < 150, RESIDUAL_SUGAR < 20, CHLORIDES<.2) %>% ggplot(aes(x=TOTAL_SULFUR_DIOXIDE, y=RESIDUAL_SUGAR, color=CHLORIDES)) + geom_point() + scale_colour_gradientn(colours = rainbow(7)) + facet_wrap(~COLOR)
+```{r message = FALSE}
+source("../03 Visualizations/whitequalitydistribution.R", echo = TRUE)
+source("../03 Visualizations/redqualitydistribution.R", echo = TRUE)
+```
 
 
-Wine experts tasted and rated the quality of each wine sample on a scale from 0 (very bad) to 10 (very excellent). 
+
+## Data Wrangling Visualizations
+
+#### Visualization 1
+This visualization shows that there's a negative correlation between density and alcohol levels in white wine. Wine experts seem to prefer lower density and higher alcohol content, as they ranked those wines to be a 6-8 rather than a 3-5 on the scale of 1-10 (10 being the highest quality).
+
+```{r}
+source("../02 Data Wrangling/DW_1.R", echo = TRUE)
+source("../03 Visualizations/DV_1.R", echo = TRUE)
+```
+  
+  
+#### Visualization 2
+These box-and-whisker plots indicate that wine experts prefer higher citric acid levels in red wine only. 
+Citric acid levels of white wines between all levels of quality had no statistical significance as compared to the positive correlation of quality and citric acid in red wines. 
+For white wines, all quality ratings had an average citric acid around 0.3. 
+*Black dots represent outliers. The white wine data set is much larger in comparison to red wine, which could be a reason for the excess outliers for the white wine box plot.
+
+```{r}
+source("../02 Data Wrangling/DW_2.R", echo = TRUE)
+source("../03 Visualizations/DV_2.R", echo = TRUE)
+```
+  
+  
+#### Visualition 3
+These graphs show that white wine has a wider range of residual sugar levels compared to the residual sugar levels in red wine. 
+There is a higher concentration of total sulfur dioxide in white wines.
+There is a stark contrast in choloride levels, as indicaded by the color of the points.
+
+```{r}
+source("../02 Data Wrangling/DW_3.R", echo = TRUE)
+source("../03 Visualizations/DV_3.R", echo = TRUE)
+```
+
+
+
+
+
 
 Citation:  
 P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. 
