@@ -1,0 +1,34 @@
+---
+title: "DV_RProject2"
+author: "Ronly Leung, Karen Lee"
+date: "October 1, 2015"
+output: html_document
+---
+```{r message = FALSE}
+require("jsonlite")
+require("RCurl")
+require(extrafont)
+require(ggplot2)
+```
+
+## Our Modified Version of R_ETL.R
+
+### What we did: 
+[steps]
+
+### Data Frame 1 (White Wine Only)
+```{r}
+source("../01 Data/white.R", echo = TRUE)
+```
+
+### Data Frame 2 (Red and White Wine)
+```{r}
+source("../01 Data/redwhite.R", echo = TRUE)
+```
+
+Wine experts tasted and rated the quality of each wine sample on a scale from 0 (very bad) to 10 (very excellent). 
+
+Citation:  
+P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. 
+Modeling wine preferences by data mining from physicochemical properties.
+In Decision Support Systems, Elsevier, 47(4):547-553. ISSN: 0167-9236.
